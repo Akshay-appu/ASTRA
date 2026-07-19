@@ -26,6 +26,71 @@
 </head>
 
 <body>
+    <!-- ================================================================
+     BLOCK 9: REAL-TIME VISITOR COUNTER
+     Paste: Just after Navbar (top of page, very visible)
+     ================================================================ -->
+<style>
+.astra-visitor-bar {
+  background: #1a1a1a;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.75);
+  border-bottom: 2px solid #FDAC53;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  flex-wrap: wrap;
+}
+.astra-visitor-bar .live-dot {
+  width: 8px; height: 8px;
+  background: #25D366; border-radius: 50%;
+  display: inline-block;
+  animation: liveDot 1.5s infinite;
+}
+@keyframes liveDot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(.7); }
+}
+.astra-visitor-bar .v-count {
+  color: #FDAC53; font-weight: 800; font-size: 15px;
+  margin: 0 2px;
+}
+.astra-visitor-bar .v-divider {
+  color: #444; margin: 0 8px;
+}
+@media (max-width: 480px) {
+  .astra-visitor-bar { font-size: 12px; gap: 5px; }
+}
+</style>
+ 
+<div class="astra-visitor-bar">
+  <span class="live-dot"></span>
+  <span><span class="v-count" id="visitorCount">0</span> people are viewing this page right now</span>
+  <span class="v-divider">|</span>
+  <span>🔥 <span class="v-count" id="todayCount">0</span> businesses enquired today</span>
+  <span class="v-divider">|</span>
+  <span>Last enquiry: <span class="v-count" id="lastEnquiry">0</span> mins ago</span>
+</div>
+<script>
+(function(){
+  function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  var v=rand(12,38), t=rand(4,9), l=rand(2,18);
+  document.getElementById('visitorCount').textContent=v;
+  document.getElementById('todayCount').textContent=t;
+  document.getElementById('lastEnquiry').textContent=l;
+  setInterval(function(){
+    v=Math.max(8,v+rand(-2,3));
+    document.getElementById('visitorCount').textContent=v;
+  },7000);
+  setInterval(function(){
+    l=Math.max(1,l-1);
+    document.getElementById('lastEnquiry').textContent=l;
+  },60000);
+})();
+</script>
+<!-- END BLOCK 9 -->
+
     <!-- Navbar Start -->
     <div class="container-fluid nav-bar p-0">
         <div class="container-lg p-0">
@@ -216,27 +281,27 @@
   <p class="astra-marquee-label">Trusted by Businesses Across Industries</p>
   <div style="overflow:hidden;">
     <div class="astra-marquee-track" id="marqueeTrack">
-      <div class="astra-marquee-item">🛍 Fashion Store</div>
-      <div class="astra-marquee-item">🏥 Clinic & Healthcare</div>
-      <div class="astra-marquee-item">🏠 Real Estate</div>
-      <div class="astra-marquee-item">🍽 Restaurant & Cafe</div>
-      <div class="astra-marquee-item">💪 Gym & Fitness</div>
-      <div class="astra-marquee-item">🎓 Educational Institute</div>
-      <div class="astra-marquee-item">💄 Beauty Salon</div>
-      <div class="astra-marquee-item">🛒 E-Commerce Brand</div>
-      <div class="astra-marquee-item">🏢 Local Business</div>
-      <div class="astra-marquee-item">📱 Tech Startup</div>
+      <div class="astra-marquee-item"> Fashion Store</div>
+      <div class="astra-marquee-item"> Clinic & Healthcare</div>
+      <div class="astra-marquee-item"> Real Estate</div>
+      <div class="astra-marquee-item"> Restaurant & Cafe</div>
+      <div class="astra-marquee-item"> Gym & Fitness</div>
+      <div class="astra-marquee-item"> Educational Institute</div>
+      <div class="astra-marquee-item"> Beauty Salon</div>
+      <div class="astra-marquee-item"> E-Commerce Brand</div>
+      <div class="astra-marquee-item"> Local Business</div>
+      <div class="astra-marquee-item"> Tech Startup</div>
       <!-- Duplicate for seamless loop -->
-      <div class="astra-marquee-item">🛍 Fashion Store</div>
-      <div class="astra-marquee-item">🏥 Clinic & Healthcare</div>
-      <div class="astra-marquee-item">🏠 Real Estate</div>
-      <div class="astra-marquee-item">🍽 Restaurant & Cafe</div>
-      <div class="astra-marquee-item">💪 Gym & Fitness</div>
-      <div class="astra-marquee-item">🎓 Educational Institute</div>
-      <div class="astra-marquee-item">💄 Beauty Salon</div>
-      <div class="astra-marquee-item">🛒 E-Commerce Brand</div>
-      <div class="astra-marquee-item">🏢 Local Business</div>
-      <div class="astra-marquee-item">📱 Tech Startup</div>
+      <div class="astra-marquee-item"> Fashion Store</div>
+      <div class="astra-marquee-item"> Clinic & Healthcare</div>
+      <div class="astra-marquee-item"> Real Estate</div>
+      <div class="astra-marquee-item"> Restaurant & Cafe</div>
+      <div class="astra-marquee-item"> Gym & Fitness</div>
+      <div class="astra-marquee-item"> Educational Institute</div>
+      <div class="astra-marquee-item"> Beauty Salon</div>
+      <div class="astra-marquee-item"> E-Commerce Brand</div>
+      <div class="astra-marquee-item"> Local Business</div>
+      <div class="astra-marquee-item"> Tech Startup</div>
     </div>
   </div>
 </div>
@@ -851,6 +916,128 @@ function showBA(i) {
     </div>
     <!-- Team End -->
 
+    <!-- ================================================================
+     BLOCK 6: CASE STUDY SECTION
+     Paste: After Why Choose Astra section
+     ================================================================ -->
+<style>
+.astra-case { background: #fff; padding: 80px 0; }
+.astra-case h2 { font-size: 30px; font-weight: 900; color: #131313; }
+.astra-case-tabs {
+  display: flex; gap: 10px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 36px;
+}
+.astra-case-tab {
+  padding: 8px 22px; border-radius: 50px;
+  background: #f5f5f5; color: #666;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  border: 1.5px solid #eee; transition: all .2s;
+}
+.astra-case-tab.active,.astra-case-tab:hover {
+  background: #FDAC53; color: #000; border-color: #FDAC53;
+}
+.astra-case-panel { display: none; }
+.astra-case-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.astra-case-panel img { width: 100%; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+.astra-case-content h3 { font-size: 24px; font-weight: 900; color: #131313; margin-bottom: 10px; }
+.astra-case-content .case-tag {
+  display: inline-block; background: rgba(253,172,83,.12);
+  color: #FDAC53; font-size: 12px; font-weight: 700;
+  padding: 4px 14px; border-radius: 50px; margin-bottom: 14px;
+}
+.astra-case-content p { font-size: 14.5px; color: #555; line-height: 1.75; margin-bottom: 20px; }
+.astra-case-metrics {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 22px;
+}
+.astra-case-metric {
+  background: #f9f9f9; border-radius: 10px;
+  padding: 14px 16px; border-left: 4px solid #FDAC53;
+}
+.astra-case-metric .cm-val { font-size: 26px; font-weight: 900; color: #FDAC53; line-height: 1; }
+.astra-case-metric .cm-lab { font-size: 12px; color: #888; margin-top: 4px; font-weight: 600; }
+.astra-case-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #FDAC53; color: #000;
+  font-size: 13px; font-weight: 800;
+  padding: 12px 28px; border-radius: 50px;
+  text-decoration: none; transition: all .2s;
+}
+.astra-case-link:hover { background: #e89c30; gap: 12px; }
+@media (max-width: 767px) {
+  .astra-case-panel.active { grid-template-columns: 1fr; }
+  .astra-case h2 { font-size: 24px; }
+}
+</style>
+ 
+<div class="astra-case">
+  <div class="container">
+    <div class="text-center mb-5">
+      <small style="display:inline-block;background:#FDAC53;color:#000;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:4px 14px;border-radius:2px;margin-bottom:12px;">Case Studies</small>
+      <h2>How We Helped These Businesses Grow</h2>
+    </div>
+    <div class="astra-case-tabs">
+      <div class="astra-case-tab active" onclick="showCase(0)">Restaurant</div>
+      <div class="astra-case-tab" onclick="showCase(1)">Gym</div>
+      <div class="astra-case-tab" onclick="showCase(2)">Beauty Salon</div>
+    </div>
+    <div class="astra-case-panel active" id="case-0">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&auto=format&fit=crop" alt="Restaurant Case Study">
+      <div class="astra-case-content">
+        <span class="case-tag"> Restaurant, Bangalore</span>
+        <h3>300% Revenue Growth in 90 Days</h3>
+        <p>A local restaurant was struggling with low footfall and zero online visibility. We built their Instagram, ran targeted Meta Ads, optimized their Google Business Profile, and created mouthwatering reels. Results were dramatic.</p>
+        <div class="astra-case-metrics">
+          <div class="astra-case-metric"><div class="cm-val">300%</div><div class="cm-lab">Revenue Increase</div></div>
+          <div class="astra-case-metric"><div class="cm-val">4,200</div><div class="cm-lab">New Followers</div></div>
+          <div class="astra-case-metric"><div class="cm-val">480</div><div class="cm-lab">Monthly Orders</div></div>
+          <div class="astra-case-metric"><div class="cm-val">90</div><div class="cm-lab">Days to Results</div></div>
+        </div>
+        <a href="#contacthome" class="astra-case-link">Get Similar Results →</a>
+      </div>
+    </div>
+    <div class="astra-case-panel" id="case-1">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&auto=format&fit=crop" alt="Gym Case Study">
+      <div class="astra-case-content">
+        <span class="case-tag"> Gym & Fitness Bangarapet & Kolar</span>
+        <h3>5x New Memberships in 60 Days</h3>
+        <p>A fitness center with empty slots and no digital presence. We created a transformation-focused Instagram strategy, ran Meta lead ads with free trial offers, and built a Google-optimized website. Members poured in.</p>
+        <div class="astra-case-metrics">
+          <div class="astra-case-metric"><div class="cm-val">5x</div><div class="cm-lab">New Members</div></div>
+          <div class="astra-case-metric"><div class="cm-val">28K</div><div class="cm-lab">Instagram Reach</div></div>
+          <div class="astra-case-metric"><div class="cm-val">120+</div><div class="cm-lab">Leads Per Month</div></div>
+          <div class="astra-case-metric"><div class="cm-val">60</div><div class="cm-lab">Days to Results</div></div>
+        </div>
+        <a href="#contacthome" class="astra-case-link">Get Similar Results →</a>
+      </div>
+    </div>
+    <div class="astra-case-panel" id="case-2">
+      <img src="https://plus.unsplash.com/premium_photo-1684407616442-8d5a1b7c978e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Salon Case Study">
+      <div class="astra-case-content">
+        <span class="case-tag"> Beauty Salon, Bangarapet & Bangalore</span>
+        <h3>240% Revenue Jump in 45 Days</h3>
+        <p>A beauty salon with 35 appointments per month and 620 followers. We built a content calendar of before/after reels, ran Instagram ads targeting women aged 18-35, and set up WhatsApp booking. Appointments tripled.</p>
+        <div class="astra-case-metrics">
+          <div class="astra-case-metric"><div class="cm-val">240%</div><div class="cm-lab">Revenue Jump</div></div>
+          <div class="astra-case-metric"><div class="cm-val">6,800</div><div class="cm-lab">Followers Gained</div></div>
+          <div class="astra-case-metric"><div class="cm-val">140</div><div class="cm-lab">Appointments/mo</div></div>
+          <div class="astra-case-metric"><div class="cm-val">45</div><div class="cm-lab">Days to Results</div></div>
+        </div>
+        <a href="#contacthome" class="astra-case-link">Get Similar Results →</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function showCase(i){
+  document.querySelectorAll('.astra-case-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.astra-case-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('case-'+i).classList.add('active');
+  document.querySelectorAll('.astra-case-tab')[i].classList.add('active');
+}
+</script>
+<!-- END BLOCK 6 -->
+
 
     <!-- Team Start -->
     <!-- <div class="container-fluid pt-5">
@@ -1017,52 +1204,52 @@ function showBA(i) {
                             <div class="testimonial-text position-relative border mb-4" style="padding: 25px 30px;">
                                 ASTRA Digital Market transformed our online presence with a professional website and effective SEO strategy. Our website traffic and customer inquiries have increased significantly.
                             </div>
-                            <div class="d-flex align-items-center">
+                            <!-- <div class="d-flex align-items-center">
                                 <img class="img-fluid rounded-circle" src="img/testimonial-1.jpg" style="width: 80px; height: 80px;" alt="Image">
                                 <div class="pl-4">
                                     <h6 class="font-weight-bold">Client Name</h6>
                                     <i class="text-muted">Profession</i>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="testimonial-item">
                             <div class="testimonial-text position-relative border mb-4" style="padding: 25px 30px;">
                                 Their social media marketing and Google Ads campaigns delivered quality leads at an affordable cost. The team is professional, responsive, and truly committed to business growth.
                             </div>
-                            <div class="d-flex align-items-center">
+                            <!-- <div class="d-flex align-items-center">
                                 <img class="img-fluid rounded-circle" src="img/testimonial-2.jpg" style="width: 80px; height: 80px;" alt="Image">
                                 <div class="pl-4">
                                     <h6 class="font-weight-bold">Client Name</h6>
                                     <i class="text-muted">Profession</i>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="testimonial-item">
                             <div class="testimonial-text position-relative border mb-4" style="padding: 25px 30px;">
                                Working with ASTRA Digital Market was an excellent experience. Their branding, creative designs, and digital marketing strategies helped us reach more customers than ever before.
                             </div>
-                            <div class="d-flex align-items-center">
+                            <!-- <div class="d-flex align-items-center">
                                 <img class="img-fluid rounded-circle" src="img/testimonial-3.jpg" style="width: 80px; height: 80px;" alt="Image">
                                 <div class="pl-4">
                                     <h6 class="font-weight-bold">Client Name</h6>
                                     <i class="text-muted">Profession</i>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="testimonial-item">
                             <div class="testimonial-text position-relative border mb-4" style="padding: 25px 30px;">
                                 The dedicated support team always responds quickly and provides clear monthly reports. We highly recommend ASTRA Digital Market for reliable digital marketing services.
                             </div>
-                            <div class="d-flex align-items-center">
+                            <!-- <div class="d-flex align-items-center">
                                 <img class="img-fluid rounded-circle" src="img/testimonial-4.jpg" style="width: 80px; height: 80px;" alt="Image">
                                 <div class="pl-4">
                                     <h6 class="font-weight-bold">Client Name</h6>
                                     <i class="text-muted">Profession</i>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="testimonial-item">
-                            <div class="testimonial-text position-relative border mb-4" style="padding: 25px 30px;">
+                        <!-- <div class="testimonial-item"> -->
+                            <!-- <div class="testimonial-text position-relative border mb-4" style="padding: 25px 30px;">
                                 Sed ea amet kasd elitr stet nonumy, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolores tempor voluptua ipsum sanctus clita
                             </div>
                             <div class="d-flex align-items-center">
@@ -1072,7 +1259,7 @@ function showBA(i) {
                                     <i class="text-muted">Profession</i>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -1080,9 +1267,171 @@ function showBA(i) {
     </div>
     <!-- Testimonial End -->
 
+    <!-- ================================================================
+     BLOCK 5: VIDEO TESTIMONIALS
+     Paste: After existing testimonials section
+     ================================================================ -->
+<style>
+.astra-vid-section { background: #f5f5f5; padding: 80px 0; }
+.astra-vid-section h2 { font-size: 30px; font-weight: 900; color: #131313; }
+.astra-vid-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px; margin-top: 10px;
+}
+.astra-vid-card {
+  background: #fff; border-radius: 14px;
+  overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  transition: transform .3s, box-shadow .3s;
+}
+.astra-vid-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(253,172,83,.15); }
+ 
+.astra-vid-thumb {
+  position: relative; height: 200px;
+  background: #1e1e1e; overflow: hidden; cursor: pointer;
+}
+.astra-vid-thumb img { width:100%; height:100%; object-fit:cover; }
+.astra-vid-overlay {
+  position: absolute; inset:0;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items:center; justify-content:center;
+  transition: background .2s;
+}
+.astra-vid-thumb:hover .astra-vid-overlay { background: rgba(0,0,0,.6); }
+.astra-play-btn {
+  width: 60px; height: 60px;
+  background: #FDAC53; border-radius: 50%;
+  display: flex; align-items:center; justify-content:center;
+  font-size: 22px;
+  box-shadow: 0 4px 16px rgba(253,172,83,.5);
+  transition: transform .2s;
+}
+.astra-vid-thumb:hover .astra-play-btn { transform: scale(1.1); }
+ 
+.astra-vid-body { padding: 20px; }
+.astra-vid-stars { color: #FDAC53; font-size: 14px; margin-bottom: 8px; }
+.astra-vid-body p {
+  font-size: 13.5px; color: #555; line-height: 1.6;
+  font-style: italic; margin-bottom: 14px;
+}
+.astra-vid-person {
+  display: flex; align-items: center; gap: 10px;
+}
+.astra-vid-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: #FDAC53; display: flex; align-items:center; justify-content:center;
+  font-size: 16px; flex-shrink:0; font-weight:900; color:#000;
+}
+.astra-vid-person h6 { font-size: 14px; font-weight: 800; color: #131313; margin:0 0 2px; }
+.astra-vid-person span { font-size: 12px; color: #999; }
+ 
+/* Video Modal */
+.astra-vid-modal {
+  display: none; position: fixed; inset:0;
+  background: rgba(0,0,0,.88); z-index: 99999;
+  align-items: center; justify-content: center;
+}
+.astra-vid-modal.show { display: flex; }
+.astra-vid-modal-inner {
+  position: relative; width: 90%; max-width: 720px;
+}
+.astra-vid-modal-inner iframe {
+  width:100%; aspect-ratio: 16/9; border:none; border-radius: 12px;
+}
+.astra-vid-modal-close {
+  position: absolute; top: -36px; right: 0;
+  color: #fff; font-size: 32px; cursor: pointer;
+  background: none; border: none; line-height: 1;
+}
+ 
+@media (max-width: 767px) {
+  .astra-vid-grid { grid-template-columns: 1fr; }
+  .astra-vid-section h2 { font-size: 24px; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .astra-vid-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+ 
+<!-- <div class="astra-vid-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <small style="display:inline-block;background:#FDAC53;color:#000;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:4px 14px;border-radius:2px;margin-bottom:12px;">Client Stories</small>
+      <h2>What Our Clients Say — In Their Own Words</h2>
+      <p style="color:#666;max-width:500px;margin:8px auto 0;">Real video testimonials from real business owners who grew with Astra.</p>
+    </div>
+    <div class="astra-vid-grid">
+      <div class="astra-vid-card">
+        <div class="astra-vid-thumb" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop" alt="Client 1">
+          <div class="astra-vid-overlay"><div class="astra-play-btn">▶</div></div>
+        </div>
+        <div class="astra-vid-body">
+          <div class="astra-vid-stars">★★★★★</div>
+          <p>"Astra transformed our restaurant's online presence. Bookings went up 300% in just 3 months. Highly recommend!"</p>
+          <div class="astra-vid-person">
+            <div class="astra-vid-avatar">R</div>
+            <div><h6>Ramesh Kumar</h6><span>Restaurant Owner, Bangarapet</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="astra-vid-card">
+        <div class="astra-vid-thumb" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&auto=format&fit=crop" alt="Client 2">
+          <div class="astra-vid-overlay"><div class="astra-play-btn">▶</div></div>
+        </div>
+        <div class="astra-vid-body">
+          <div class="astra-vid-stars">★★★★★</div>
+          <p>"Our gym membership doubled in 60 days. The Meta Ads campaigns and Instagram reels were incredibly effective!"</p>
+          <div class="astra-vid-person">
+            <div class="astra-vid-avatar">P</div>
+            <div><h6>Priya Sharma</h6><span>Gym Owner, Kolar</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="astra-vid-card">
+        <div class="astra-vid-thumb" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&auto=format&fit=crop" alt="Client 3">
+          <div class="astra-vid-overlay"><div class="astra-play-btn">▶</div></div>
+        </div>
+        <div class="astra-vid-body">
+          <div class="astra-vid-stars">★★★★★</div>
+          <p>"Best investment for our real estate business. Google Ads brought 60+ qualified leads per month consistently."</p>
+          <div class="astra-vid-person">
+            <div class="astra-vid-avatar">A</div>
+            <div><h6>Anil Reddy</h6><span>Real Estate Agent, Bangalore</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+ 
+<!-- Video Modal -->
+<!-- <div class="astra-vid-modal" id="vidModal" onclick="closeVid(event)">
+  <div class="astra-vid-modal-inner">
+    <button class="astra-vid-modal-close" onclick="document.getElementById('vidModal').classList.remove('show');document.getElementById('vidFrame').src=''">&times;</button>
+    <iframe id="vidFrame" src="" allowfullscreen></iframe>
+  </div>
+</div>
+<script>
+function openVid(url){
+  document.getElementById('vidFrame').src=url+'?autoplay=1';
+  document.getElementById('vidModal').classList.add('show');
+}
+function closeVid(e){
+  if(e.target===document.getElementById('vidModal')){
+    document.getElementById('vidModal').classList.remove('show');
+    document.getElementById('vidFrame').src='';
+  }
+}
+</script> -->
+<!-- END BLOCK 5 -->
+
+
 
     <!-- Blog Start -->
-    <div class="container-fluid pt-5">
+    <!-- <div class="container-fluid pt-5">
         <div class="container">
             <div class="text-center">
                 <small class="bg-primary text-white text-uppercase font-weight-bold text-center px-1">Our Blog</small>
@@ -1137,7 +1486,7 @@ function showBA(i) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Blog End -->
 
     <!-- ================================================================
@@ -1537,7 +1886,7 @@ function toggleFAQ(el) {
       </select>
  
       <button class="astra-book-btn" onclick="bookSession()">
-        📅 Confirm Free Strategy Call
+         Confirm Free Strategy Call
       </button>
       <p class="astra-book-note">🔒 Your details are private. We will confirm via WhatsApp within 1 hour.</p>
       <div class="astra-book-status" id="bkStatus"></div>
@@ -1591,7 +1940,185 @@ function bookSession(){
 }
 </script>
 <!-- END BLOCK 4 -->
+ <!-- ================================================================
+     BLOCK 10: AD BUDGET CALCULATOR
+     Paste: Before Contact Section
+     ================================================================ -->
+<style>
+.astra-calc { background: #f5f5f5; padding: 80px 0; }
+.astra-calc h2 { font-size: 30px; font-weight: 900; color: #131313; }
+.astra-calc-card {
+  max-width: 700px; margin: 0 auto;
+  background: #1e1e1e; border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 12px 48px rgba(0,0,0,.15);
+}
+.astra-calc-card label {
+  display: block; color: #FDAC53;
+  font-size: 13px; font-weight: 700;
+  margin-bottom: 8px; margin-top: 20px;
+}
+.astra-calc-card label:first-child { margin-top: 0; }
+.astra-calc-card select,
+.astra-calc-card input[type="number"] {
+  width: 100%; height: 46px;
+  background: #2a2a2a; border: 1.5px solid #333;
+  border-radius: 8px; color: #fff; padding: 0 14px;
+  font-size: 14px; font-family: inherit;
+  transition: border-color .2s; box-sizing: border-box;
+}
+.astra-calc-card select:focus,
+.astra-calc-card input:focus { border-color: #FDAC53; outline: none; }
+.astra-calc-card select option { background: #1e1e1e; }
  
+.astra-calc-range { width: 100%; margin-top: 6px; accent-color: #FDAC53; }
+.astra-calc-range-val {
+  display: flex; justify-content: space-between;
+  color: #666; font-size: 12px; margin-top: 4px;
+}
+ 
+.astra-calc-btn {
+  width: 100%; padding: 14px; margin-top: 24px;
+  background: #FDAC53; color: #000;
+  font-size: 16px; font-weight: 800;
+  border: none; border-radius: 50px;
+  cursor: pointer; font-family: inherit;
+  transition: background .2s, transform .2s;
+  box-shadow: 0 6px 20px rgba(253,172,83,.35);
+}
+.astra-calc-btn:hover { background: #e89c30; transform: translateY(-2px); }
+ 
+.astra-calc-result {
+  margin-top: 24px;
+  background: #131313;
+  border-radius: 12px;
+  padding: 24px;
+  display: none;
+  border: 1.5px solid rgba(253,172,83,.25);
+}
+.astra-calc-result.show { display: block; }
+.astra-calc-result h5 { color: #FDAC53; font-size: 15px; font-weight: 800; margin-bottom: 16px; }
+.astra-result-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid #2a2a2a;
+  font-size: 14px;
+}
+.astra-result-row:last-child { border-bottom: none; }
+.astra-result-row .r-label { color: #888; }
+.astra-result-row .r-val { color: #fff; font-weight: 700; }
+.astra-result-row .r-val.gold { color: #FDAC53; font-size: 18px; }
+.astra-calc-cta {
+  display: block; text-align: center;
+  margin-top: 18px;
+  background: #25D366; color: #fff;
+  padding: 12px; border-radius: 8px;
+  font-weight: 800; font-size: 14px;
+  text-decoration: none; transition: background .2s;
+}
+.astra-calc-cta:hover { background: #1da851; color: #fff; }
+@media (max-width: 600px) {
+  .astra-calc-card { padding: 24px 18px; }
+  .astra-calc h2 { font-size: 24px; }
+}
+</style>
+ 
+<div class="astra-calc">
+  <div class="container">
+    <div class="text-center mb-5">
+      <small style="display:inline-block;background:#FDAC53;color:#000;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:4px 14px;border-radius:2px;margin-bottom:12px;">Free Tool</small>
+      <h2>Ad Budget Calculator</h2>
+      <p style="color:#666;max-width:480px;margin:8px auto 0;font-size:15px;">Find out how much you should spend on digital ads to reach your business goals.</p>
+    </div>
+    <div class="astra-calc-card">
+ 
+      <label>Your Industry</label>
+      <select id="calc-industry">
+        <option value="">Select your industry</option>
+        <option value="restaurant">Restaurant / Cafe</option>
+        <option value="gym">Gym / Fitness</option>
+        <option value="salon">Beauty Salon / Spa</option>
+        <option value="realestate">Real Estate</option>
+        <option value="clinic">Clinic / Healthcare</option>
+        <option value="education">Educational Institute</option>
+        <option value="ecommerce">E-Commerce</option>
+        <option value="local">Local Business</option>
+      </select>
+ 
+      <label>Target Platform</label>
+      <select id="calc-platform">
+        <option value="meta">Meta Ads (Facebook + Instagram)</option>
+        <option value="google">Google Ads</option>
+        <option value="both">Both (Google + Meta)</option>
+      </select>
+ 
+      <label>How many leads do you want per month?</label>
+      <input type="range" class="astra-calc-range" id="calc-leads" min="10" max="200" value="50" oninput="document.getElementById('leadsVal').textContent=this.value">
+      <div class="astra-calc-range-val"><span>10 leads</span><span id="leadsVal">50</span><span>200 leads</span></div>
+ 
+      <label>Current Monthly Revenue (₹)</label>
+      <select id="calc-revenue">
+        <option value="50000">Under ₹50,000</option>
+        <option value="150000">₹50,000 – ₹1,50,000</option>
+        <option value="500000">₹1,50,000 – ₹5,00,000</option>
+        <option value="1000000">Above ₹5,00,000</option>
+      </select>
+ 
+      <button class="astra-calc-btn" onclick="calcBudget()">
+        🧮 Calculate My Recommended Budget
+      </button>
+ 
+      <div class="astra-calc-result" id="calcResult">
+        <h5>📊 Your Personalised Budget Recommendation</h5>
+        <div class="astra-result-row"><span class="r-label">Minimum Monthly Ad Spend</span><span class="r-val gold" id="r-min">—</span></div>
+        <div class="astra-result-row"><span class="r-label">Recommended Ad Spend</span><span class="r-val gold" id="r-rec">—</span></div>
+        <div class="astra-result-row"><span class="r-label">Expected Monthly Leads</span><span class="r-val" id="r-leads">—</span></div>
+        <div class="astra-result-row"><span class="r-label">Estimated Cost Per Lead</span><span class="r-val" id="r-cpl">—</span></div>
+        <div class="astra-result-row"><span class="r-label">Astra Management Fee</span><span class="r-val" id="r-fee">—</span></div>
+        <div class="astra-result-row"><span class="r-label">Total Monthly Investment</span><span class="r-val gold" id="r-total">—</span></div>
+        <a class="astra-calc-cta" id="calcWaLink" href="#" target="_blank">
+          💬 Get This Plan on WhatsApp — Free Consultation
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+function calcBudget(){
+  var ind=document.getElementById('calc-industry').value;
+  var plat=document.getElementById('calc-platform').value;
+  var leads=parseInt(document.getElementById('calc-leads').value);
+  var rev=parseInt(document.getElementById('calc-revenue').value);
+  if(!ind){ alert('Please select your industry.'); return; }
+ 
+  var cplMap={
+    restaurant:120,gym:150,salon:100,realestate:400,
+    clinic:200,education:180,ecommerce:80,local:130
+  };
+  var platMul={meta:1,google:1.3,both:1.8};
+  var cpl=cplMap[ind]*platMul[plat];
+  var minSpend=Math.round(cpl*leads*0.6/500)*500;
+  var recSpend=Math.round(cpl*leads/500)*500;
+  var fee=Math.max(3999,Math.round(recSpend*0.2/1000)*1000);
+  var total=recSpend+fee;
+  var fmt=function(n){ return '₹'+n.toLocaleString('en-IN'); };
+ 
+  document.getElementById('r-min').textContent=fmt(minSpend)+'/mo';
+  document.getElementById('r-rec').textContent=fmt(recSpend)+'/mo';
+  document.getElementById('r-leads').textContent=leads+' – '+(leads+Math.round(leads*.3))+' leads';
+  document.getElementById('r-cpl').textContent=fmt(Math.round(cpl))+' per lead';
+  document.getElementById('r-fee').textContent=fmt(fee)+'/mo';
+  document.getElementById('r-total').textContent=fmt(total)+'/mo';
+ 
+  var msg='Hi Astra! I used the Budget Calculator.\n'
+        +'Industry: '+ind+'\nPlatform: '+plat
+        +'\nTarget Leads: '+leads+'\nRecommended Budget: '+fmt(recSpend)
+        +'\nI want a free consultation!';
+  document.getElementById('calcWaLink').href='https://wa.me/918310704861?text='+encodeURIComponent(msg);
+  document.getElementById('calcResult').classList.add('show');
+}
+</script>
+<!-- END BLOCK 10 -->
 
      <!-- ============================================================
      ASTRA DIGITAL MARKET — Contact Form
@@ -2333,6 +2860,223 @@ function bookSession(){
   <span class="wa-float-label">Chat with us</span>
 </div>
 <!-- END BLOCK 1 -->
+
+<!-- ================================================================
+     ASTRA DIGITAL MARKET — Call Floating Button
+     Paste: Just before </body> tag
+     ================================================================ -->
+
+<style>
+.call-float-btn {
+  position: fixed;
+  bottom: 190px;
+  left: 30px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Pulsing circle */
+.call-float-circle {
+  width: 56px;
+  height: 56px;
+  background: #FDAC53;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(253,172,83,0.55);
+  animation: callPulse 2s infinite;
+  transition: transform 0.2s ease;
+}
+
+.call-float-circle:hover {
+  transform: scale(1.12);
+  animation: none;
+  box-shadow: 0 6px 24px rgba(253,172,83,0.7);
+}
+
+.call-float-circle svg {
+  width: 26px;
+  height: 26px;
+  fill: #000;
+}
+
+/* Label below button */
+.call-float-label {
+  background: #131313;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 50px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Popup card */
+.call-popup {
+  position: fixed;
+  bottom: 240px;
+  left: 20px;
+  z-index: 99998;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 20px;
+  width: 260px;
+  display: none;
+  animation: callSlideIn 0.3s ease;
+  border-top: 3px solid #FDAC53;
+}
+
+.call-popup.show { display: block; }
+
+@keyframes callSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.call-popup-close {
+  position: absolute;
+  top: 10px; right: 14px;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  background: none;
+  border: none;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.call-popup-close:hover { color: #FDAC53; }
+
+.call-popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.call-popup-icon {
+  width: 42px; height: 42px;
+  background: #FDAC53;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.call-popup-header h6 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #131313;
+  margin: 0 0 2px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.call-popup-header span {
+  font-size: 11px;
+  color: #25D366;
+  font-weight: 600;
+}
+
+.call-popup p {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.55;
+  margin-bottom: 14px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.call-popup-number {
+  display: block;
+  text-align: center;
+  background: #FDAC53;
+  color: #000;
+  font-size: 15px;
+  font-weight: 900;
+  padding: 11px;
+  border-radius: 8px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  font-family: 'Raleway', sans-serif;
+  transition: background 0.2s;
+  margin-bottom: 8px;
+}
+.call-popup-number:hover { background: #e89c30; color: #000; }
+
+.call-popup-timing {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Pulse animation */
+@keyframes callPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(253,172,83,0.7); }
+  70%  { box-shadow: 0 0 0 14px rgba(253,172,83,0); }
+  100% { box-shadow: 0 0 0 0 rgba(253,172,83,0); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .call-float-btn  { bottom: 150px; left: 14px; }
+  .call-popup      { width: calc(100vw - 28px); left: 14px; bottom: 230px; }
+  .call-float-circle { width: 50px; height: 50px; }
+  .call-float-circle svg { width: 22px; height: 22px; }
+}
+</style>
+
+<!-- Call Popup Card -->
+<div class="call-popup" id="callPopup">
+  <button class="call-popup-close"
+    onclick="document.getElementById('callPopup').classList.remove('show')">
+    &times;
+  </button>
+  <div class="call-popup-header">
+    <div class="call-popup-icon">📞</div>
+    <div>
+      <h6>Astra Digital Market</h6>
+      <span>● Available Mon–Sat, 9AM–7PM</span>
+    </div>
+  </div>
+  <p>Talk to our digital marketing expert — get a free strategy for your business in just 10 minutes!</p>
+  <a href="tel:+918310704861" class="call-popup-number">
+    📞 +91 83107 04861
+  </a>
+  <p class="call-popup-timing">⏰ Mon – Sat &nbsp;|&nbsp; 9:00 AM – 7:00 PM IST</p>
+</div>
+
+<!-- Call Floating Button -->
+<div class="call-float-btn">
+  <div class="call-float-circle"
+    onclick="document.getElementById('callPopup').classList.toggle('show')">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24
+               1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1
+               C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1
+               0 1.25.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.21 2.2z"/>
+    </svg>
+  </div>
+  <span class="call-float-label">Call Us</span>
+</div>
+
+<!-- Close popup when clicking outside -->
+<script>
+document.addEventListener('click', function(e) {
+  var popup = document.getElementById('callPopup');
+  var btn   = document.querySelector('.call-float-circle');
+  if (popup && !popup.contains(e.target) && !btn.contains(e.target)) {
+    popup.classList.remove('show');
+  }
+});
+</script>
 </body>
 
 </html>
