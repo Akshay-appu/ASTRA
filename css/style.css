@@ -9675,3 +9675,59 @@ h6,
   padding: 0;
   list-style-type: none;
 }
+/* ── MOBILE CONTACT FORM FIX — FINAL ── */
+@media (max-width: 767px) {
+
+  .astra-contact-wrap,
+  .astra-contact-wrap .container,
+  .astra-contact-grid,
+  .astra-form-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .astra-form-card {
+    padding: 20px 14px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  .astra-form-row,
+  .astra-sb-row {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .astra-form-card input[type="text"],
+  .astra-form-card input[type="email"],
+  .astra-form-card input[type="tel"],
+  .astra-phone-wrap,
+  .astra-submit-btn,
+  .astra-check-list,
+  .astra-radio-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .astra-info-cards {
+    padding: 0 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+}
