@@ -136,12 +136,8 @@ body.ap-home {
   display: flex; align-items: center; justify-content: space-between;
   height: 76px;
 }
-.ap-logo { display: flex; align-items: center; gap: 12px; }
-.ap-logo img { height: 44px; width: auto; }
-.ap-logo span {
-  font-size: 19px; font-weight: 800; letter-spacing: .02em; color: var(--text);
-}
-.ap-logo span b { color: var(--gold); font-weight: 800; }
+.ap-logo { display: flex; align-items: center; }
+.ap-logo img { height: 64px; width: auto; max-height: 64px; object-fit: contain; display: block; }
 
 .ap-menu { display: flex; align-items: center; gap: 4px; }
 .ap-menu a {
@@ -822,3 +818,5 @@ body.ap-home {
 }
 .ap-wa:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 16px 40px rgba(37, 211, 102, .5); }
 .ap-wa svg { width: 28px; height: 28px; fill: #fff; }
+
+@media (max-width: 991px) { .ap-logo img { height: 50px; max-height: 50px; } }

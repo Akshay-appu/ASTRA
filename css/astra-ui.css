@@ -160,10 +160,8 @@ body.ap-page {
 }
 .ap-nav.ap-scrolled { background: rgba(7,7,7,.93); box-shadow: 0 10px 40px rgba(0,0,0,.5); }
 .ap-nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-.ap-logo { display: flex; align-items: center; gap: 12px; }
-.ap-logo img { height: 44px; width: auto; }
-.ap-logo span { font-size: 19px; font-weight: 800; letter-spacing: .02em; color: var(--astra-white); }
-.ap-logo span b { color: var(--astra-gold); font-weight: 800; }
+.ap-logo { display: flex; align-items: center; }
+.ap-logo img { height: 64px; width: auto; max-height: 64px; object-fit: contain; display: block; }
 .ap-menu { display: flex; align-items: center; gap: 4px; }
 .ap-menu a {
   position: relative; padding: 10px 14px; font-size: 14.5px; font-weight: 600;
@@ -205,6 +203,7 @@ body.ap-page {
   .ap-menu, .ap-nav-cta .ap-btn { display: none; }
   .ap-burger { display: flex; }
   .ap-nav-inner { height: 68px; }
+  .ap-logo img { height: 50px; max-height: 50px; }
   .ap-mobile { inset-block-start: 68px; max-height: calc(100vh - 68px); }
 }
 
@@ -456,3 +455,22 @@ body.ap-page {
 .ap-info-card p, .ap-info-card a { font-size: 14px; color: var(--astra-muted); }
 .ap-info-card a:hover { color: var(--astra-gold-light); }
 @media (max-width: 991px) { .ap-contact-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Meta & WhatsApp Architecture ---------- */
+.ap-mw-arch-flow {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 10px 0;
+}
+.ap-mw-step {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 12px 14px;
+  background: rgba(255,255,255,.02); border: 1px solid var(--astra-border-soft); border-radius: var(--radius-sm); flex: 1; min-width: 110px;
+}
+.ap-mw-step .ap-mw-icon { font-size: 22px; }
+.ap-mw-step b { font-size: 11.5px; letter-spacing: .1em; color: var(--astra-white); font-weight: 800; }
+.ap-mw-step small { font-size: 11px; color: var(--astra-muted); }
+.ap-mw-arrow { color: var(--astra-gold); font-size: 16px; font-weight: 800; opacity: .8; }
+
+@media (max-width: 768px) {
+  .ap-mw-arch-flow { flex-direction: column; gap: 12px; }
+  .ap-mw-arrow { transform: rotate(90deg); margin: -4px 0; }
+  .ap-mw-step { width: 100%; min-width: 0; }
+}
