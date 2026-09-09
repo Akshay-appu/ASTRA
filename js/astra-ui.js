@@ -115,6 +115,15 @@
     });
   });
 
+  /* Contact form: route the existing EmailJS form to the connected Gmail service. */
+  if (window.emailjs && document.getElementById('astraContactForm')) {
+    var originalEmailJSSend = window.emailjs.send.bind(window.emailjs);
+    window.emailjs.send = function (serviceId, templateId, templateParams, options) {
+      if (serviceId === 'service_1ve16ms') serviceId = 'service_5gifhqn';
+      return originalEmailJSSend(serviceId, templateId, templateParams, options);
+    };
+  }
+
   /* Footer year */
   var yr = document.getElementById('auYear');
   if (yr) yr.textContent = new Date().getFullYear();
