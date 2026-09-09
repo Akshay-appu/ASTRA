@@ -6,45 +6,19 @@
   'use strict';
 
   /* ---------- Repair legacy mojibake in existing homepage HTML ---------- */
-  /* Some homepage text was saved after an incorrect UTF-8 -> Windows-1252
-     conversion. Repair the affected text/attributes in the browser without
-     changing the page structure or design. */
   var mojibake = [
-    ['â€”', '—'],
-    ['â€“', '–'],
-    ['â†—', '→'],
-    ['â†’', '→'],
-    ['â†‘', '↑'],
-    ['â†“', '↓'],
-    ['âœ¦', '✨'],
-    ['âš™ï¸', '⚙️'],
-    ['ðŸ–¥ï¸', '🖥️'],
-    ['ðŸ“±', '📱'],
-    ['ðŸ¤–', '🤖'],
-    ['ðŸ“Š', '📊'],
-    ['ðŸ“ˆ', '📈'],
-    ['ðŸ“‹', '📋'],
-    ['ðŸ”¥', '🔥'],
-    ['ðŸ’¡', '💡'],
-    ['ðŸ”§', '🔧'],
-    ['ðŸŽ¯', '🎯'],
-    ['ðŸŒŸ', '🌟'],
-    ['â‚¹', '₹'],
-    ['Â©', '©'],
-    ['Â®', '®'],
-    ['Â·', '·'],
-    ['â€œ', '“'],
-    ['â€', '”'],
-    ['â€˜', '‘'],
-    ['â€™', '’'],
-    ['â€¦', '…']
+    ['â€”', '—'], ['â€“', '–'], ['â†—', '→'], ['â†’', '→'],
+    ['â†‘', '↑'], ['â†“', '↓'], ['âœ¦', '✨'], ['âš™ï¸', '⚙️'],
+    ['ðŸ–¥ï¸', '🖥️'], ['ðŸ“±', '📱'], ['ðŸ¤–', '🤖'], ['ðŸ“Š', '📊'],
+    ['ðŸ“ˆ', '📈'], ['ðŸ“‹', '📋'], ['ðŸ”¥', '🔥'], ['ðŸ’¡', '💡'],
+    ['ðŸ”§', '🔧'], ['ðŸŽ¯', '🎯'], ['ðŸŒŸ', '🌟'], ['â‚¹', '₹'],
+    ['Â©', '©'], ['Â®', '®'], ['Â·', '·'], ['â€œ', '“'], ['â€', '”'],
+    ['â€˜', '‘'], ['â€™', '’'], ['â€¦', '…']
   ];
 
   function repairMojibake(value) {
     var out = value;
-    for (var i = 0; i < mojibake.length; i++) {
-      out = out.split(mojibake[i][0]).join(mojibake[i][1]);
-    }
+    for (var i = 0; i < mojibake.length; i++) out = out.split(mojibake[i][0]).join(mojibake[i][1]);
     return out;
   }
 
@@ -68,17 +42,25 @@
 
   repairNode(document.body);
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---------- Mobile Digital Growth System layout fix ---------- */
+  var fixStyle = document.createElement('style');
+  fixStyle.id = 'astra-mobile-growth-fix';
+  fixStyle.textContent = '@media (max-width:480px){' +
+    '.ap-system-visual{padding:24px!important;min-height:360px!important;overflow:hidden!important;}' +
+    '.ap-system-visual .ap-node{position:absolute!important;display:block!important;font-size:9.5px!important;line-height:1.2!important;padding:8px 10px!important;white-space:nowrap!important;max-width:42%!important;z-index:3!important;animation:none!important;transform:none!important;box-sizing:border-box!important;}' +
+    '.ap-system-visual .ap-node:nth-child(3){top:8%!important;left:3%!important;right:auto!important;bottom:auto!important;}' +
+    '.ap-system-visual .ap-node:nth-child(4){top:8%!important;right:3%!important;left:auto!important;bottom:auto!important;}' +
+    '.ap-system-visual .ap-node:nth-child(5){bottom:8%!important;left:3%!important;right:auto!important;top:auto!important;}' +
+    '.ap-system-visual .ap-node:nth-child(6){bottom:8%!important;right:3%!important;left:auto!important;top:auto!important;}' +
+  '}';
+  document.head.appendChild(fixStyle);
 
-  /* ---------- Sticky nav shadow ---------- */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var nav = document.querySelector('.ap-nav');
-  function onScroll() {
-    if (nav) nav.classList.toggle('ap-scrolled', window.scrollY > 10);
-  }
+  function onScroll() { if (nav) nav.classList.toggle('ap-scrolled', window.scrollY > 10); }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------- Mobile menu ---------- */
   var burger = document.querySelector('.ap-burger');
   var mobile = document.getElementById('apMobile');
   if (burger && mobile) {
@@ -93,43 +75,29 @@
       burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
       mobile.classList.toggle('ap-open', !open);
     });
-    mobile.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeMenu);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeMenu();
-    });
+    mobile.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
     document.addEventListener('click', function (e) {
-      if (mobile.classList.contains('ap-open') &&
-          !mobile.contains(e.target) && !burger.contains(e.target)) closeMenu();
+      if (mobile.classList.contains('ap-open') && !mobile.contains(e.target) && !burger.contains(e.target)) closeMenu();
     });
   }
 
-  /* ---------- Reveal on scroll ---------- */
   var revealEls = document.querySelectorAll('.ap-reveal');
   if ('IntersectionObserver' in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('ap-in'); io.unobserve(en.target); }
-      });
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('ap-in'); io.unobserve(en.target); } });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(function (el) { io.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('ap-in'); });
-  }
+  } else revealEls.forEach(function (el) { el.classList.add('ap-in'); });
 
-  /* ---------- Stat counters ---------- */
   var counters = document.querySelectorAll('[data-count]');
   function animateCount(el) {
-    var raw = el.getAttribute('data-count');
-    var target = parseFloat(raw);
-    var decimals = (raw.split('.')[1] || '').length;
-    var dur = 1600, start = null;
+    var raw = el.getAttribute('data-count'), target = parseFloat(raw);
+    var decimals = (raw.split('.')[1] || '').length, dur = 1600, start = null;
     if (reduceMotion) { el.textContent = target.toFixed(decimals); return; }
     function tick(ts) {
       if (!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
+      var p = Math.min((ts - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
       el.textContent = (target * eased).toFixed(decimals);
       if (p < 1) requestAnimationFrame(tick);
     }
@@ -137,16 +105,11 @@
   }
   if ('IntersectionObserver' in window) {
     var cio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { animateCount(en.target); cio.unobserve(en.target); }
-      });
+      entries.forEach(function (en) { if (en.isIntersecting) { animateCount(en.target); cio.unobserve(en.target); } });
     }, { threshold: 0.4 });
     counters.forEach(function (el) { cio.observe(el); });
-  } else {
-    counters.forEach(animateCount);
-  }
+  } else counters.forEach(animateCount);
 
-  /* ---------- Card spotlight follows cursor ---------- */
   document.querySelectorAll('.ap-card').forEach(function (card) {
     card.addEventListener('pointermove', function (e) {
       var r = card.getBoundingClientRect();
