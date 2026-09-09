@@ -5,15 +5,25 @@
 (function () {
   'use strict';
 
+  /* Load a versioned copy of the original homepage stylesheet.
+     This prevents stale GitHub Pages/browser CSS from hiding the original design. */
+  var versionedCss = 'css/astra-homepage-v2.css';
+  if (!document.querySelector('link[data-astra-home-v2]')) {
+    var cssLink = document.createElement('link');
+    cssLink.rel = 'stylesheet';
+    cssLink.href = versionedCss;
+    cssLink.setAttribute('data-astra-home-v2', 'true');
+    document.head.appendChild(cssLink);
+  }
+
   /* ---------- Repair legacy mojibake in existing homepage HTML ---------- */
   var mojibake = [
-    ['â€”', '—'], ['â€“', '–'], ['â†—', '→'], ['â†’', '→'],
-    ['â†‘', '↑'], ['â†“', '↓'], ['âœ¦', '✨'], ['âš™ï¸', '⚙️'],
-    ['ðŸ–¥ï¸', '🖥️'], ['ðŸ“±', '📱'], ['ðŸ¤–', '🤖'], ['ðŸ“Š', '📊'],
-    ['ðŸ“ˆ', '📈'], ['ðŸ“‹', '📋'], ['ðŸ”¥', '🔥'], ['ðŸ’¡', '💡'],
-    ['ðŸ”§', '🔧'], ['ðŸŽ¯', '🎯'], ['ðŸŒŸ', '🌟'], ['â‚¹', '₹'],
-    ['Â©', '©'], ['Â®', '®'], ['Â·', '·'], ['â€œ', '“'], ['â€', '”'],
-    ['â€˜', '‘'], ['â€™', '’'], ['â€¦', '…']
+    ['â€”', '—'], ['â€“', '–'], ['â†—', '→'], ['â†’', '→'], ['â†‘', '↑'],
+    ['â†“', '↓'], ['âœ¦', '✨'], ['âš™ï¸', '⚙️'], ['ðŸ–¥ï¸', '🖥️'],
+    ['ðŸ“±', '📱'], ['ðŸ¤–', '🤖'], ['ðŸ“Š', '📊'], ['ðŸ“ˆ', '📈'],
+    ['ðŸ“‹', '📋'], ['ðŸ”¥', '🔥'], ['ðŸ’¡', '💡'], ['ðŸ”§', '🔧'],
+    ['ðŸŽ¯', '🎯'], ['ðŸŒŸ', '🌟'], ['â‚¹', '₹'], ['Â©', '©'], ['Â®', '®'],
+    ['Â·', '·'], ['â€œ', '“'], ['â€', '”'], ['â€˜', '‘'], ['â€™', '’'], ['â€¦', '…']
   ];
 
   function repairMojibake(value) {
@@ -33,27 +43,12 @@
     for (var e = 0; e < elements.length; e++) {
       var el = elements[e];
       for (var a = 0; a < el.attributes.length; a++) {
-        var attr = el.attributes[a];
-        var fixedAttr = repairMojibake(attr.value);
+        var attr = el.attributes[a], fixedAttr = repairMojibake(attr.value);
         if (fixedAttr !== attr.value) el.setAttribute(attr.name, fixedAttr);
       }
     }
   }
-
   repairNode(document.body);
-
-  /* ---------- Mobile Digital Growth System layout fix ---------- */
-  var fixStyle = document.createElement('style');
-  fixStyle.id = 'astra-mobile-growth-fix';
-  fixStyle.textContent = '@media (max-width:480px){' +
-    '.ap-system-visual{padding:24px!important;min-height:360px!important;overflow:hidden!important;}' +
-    '.ap-system-visual .ap-node{position:absolute!important;display:block!important;font-size:9.5px!important;line-height:1.2!important;padding:8px 10px!important;white-space:nowrap!important;max-width:42%!important;z-index:3!important;animation:none!important;transform:none!important;box-sizing:border-box!important;}' +
-    '.ap-system-visual .ap-node:nth-child(3){top:8%!important;left:3%!important;right:auto!important;bottom:auto!important;}' +
-    '.ap-system-visual .ap-node:nth-child(4){top:8%!important;right:3%!important;left:auto!important;bottom:auto!important;}' +
-    '.ap-system-visual .ap-node:nth-child(5){bottom:8%!important;left:3%!important;right:auto!important;top:auto!important;}' +
-    '.ap-system-visual .ap-node:nth-child(6){bottom:8%!important;right:3%!important;left:auto!important;top:auto!important;}' +
-  '}';
-  document.head.appendChild(fixStyle);
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var nav = document.querySelector('.ap-nav');
@@ -65,15 +60,11 @@
   var mobile = document.getElementById('apMobile');
   if (burger && mobile) {
     function closeMenu() {
-      burger.setAttribute('aria-expanded', 'false');
-      mobile.classList.remove('ap-open');
-      burger.setAttribute('aria-label', 'Open menu');
+      burger.setAttribute('aria-expanded', 'false'); mobile.classList.remove('ap-open'); burger.setAttribute('aria-label', 'Open menu');
     }
     burger.addEventListener('click', function () {
       var open = burger.getAttribute('aria-expanded') === 'true';
-      burger.setAttribute('aria-expanded', String(!open));
-      burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
-      mobile.classList.toggle('ap-open', !open);
+      burger.setAttribute('aria-expanded', String(!open)); burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu'); mobile.classList.toggle('ap-open', !open);
     });
     mobile.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
@@ -92,8 +83,8 @@
 
   var counters = document.querySelectorAll('[data-count]');
   function animateCount(el) {
-    var raw = el.getAttribute('data-count'), target = parseFloat(raw);
-    var decimals = (raw.split('.')[1] || '').length, dur = 1600, start = null;
+    var raw = el.getAttribute('data-count'), target = parseFloat(raw), decimals = (raw.split('.')[1] || '').length;
+    var dur = 1600, start = null;
     if (reduceMotion) { el.textContent = target.toFixed(decimals); return; }
     function tick(ts) {
       if (!start) start = ts;
