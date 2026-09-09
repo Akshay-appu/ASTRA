@@ -1,0 +1,51 @@
+name: Connect Contact EmailJS
+
+on:
+  push:
+    branches:
+      - homepage-redesign
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-emailjs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: homepage-redesign
+          fetch-depth: 0
+
+      - name: Update EmailJS service ID
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('contact.html')
+          text = path.read_text(encoding='utf-8')
+          old = 'service_1ve16ms'
+          new = 'service_5gifhqn'
+          if old in text:
+              path.write_text(text.replace(old, new), encoding='utf-8')
+              print(f'Updated {old} -> {new}')
+          else:
+              print('Old service ID not present; checking current configuration.')
+              if new in text:
+                  print('New service ID is already configured.')
+              else:
+                  raise SystemExit('Neither the old nor new EmailJS service ID was found in contact.html')
+          PY
+
+      - name: Commit change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add contact.html
+          if git diff --cached --quiet; then
+            echo "No change needed."
+          else
+            git commit -m "Use connected Gmail EmailJS service for contact form"
+            git push origin HEAD:homepage-redesign
+          fi
