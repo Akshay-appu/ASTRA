@@ -3,6 +3,7 @@
   .ap-system-visual {
     padding: 24px;
     min-height: 360px;
+    overflow: hidden;
   }
 
   .ap-orbit {
@@ -18,42 +19,46 @@
   }
 
   .ap-node {
-    font-size: 9.5px;
-    line-height: 1.2;
-    padding: 8px 10px;
-    white-space: nowrap;
-    max-width: 44%;
-    z-index: 3;
-    animation: none;
+    position: absolute !important;
+    display: block !important;
+    font-size: 9.5px !important;
+    line-height: 1.2 !important;
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+    max-width: 44% !important;
+    z-index: 3 !important;
+    animation: none !important;
+    transform: none !important;
+    box-sizing: border-box !important;
   }
 
-  /* The visual has four independent corner labels on small screens. */
+  /* Four separate corners — no transforms/animations that can pull labels together. */
   .ap-system-visual .ap-node:nth-child(3) {
-    top: 8%;
-    left: 5%;
-    right: auto;
-    bottom: auto;
+    top: 10% !important;
+    left: 4% !important;
+    right: auto !important;
+    bottom: auto !important;
   }
 
   .ap-system-visual .ap-node:nth-child(4) {
-    top: 8%;
-    right: 5%;
-    left: auto;
-    bottom: auto;
+    top: 10% !important;
+    right: 4% !important;
+    left: auto !important;
+    bottom: auto !important;
   }
 
   .ap-system-visual .ap-node:nth-child(5) {
-    bottom: 8%;
-    left: 5%;
-    right: auto;
-    top: auto;
+    bottom: 10% !important;
+    left: 4% !important;
+    right: auto !important;
+    top: auto !important;
   }
 
   .ap-system-visual .ap-node:nth-child(6) {
-    bottom: 8%;
-    right: 5%;
-    left: auto;
-    top: auto;
+    bottom: 10% !important;
+    right: 4% !important;
+    left: auto !important;
+    top: auto !important;
   }
 }
 
