@@ -75,6 +75,58 @@
   /* defer guarantees the document body has been parsed before this runs. */
   repairNode(document.body);
 
+  /* ---------- Professional homepage section order ---------- */
+  /* Keep the existing design and content intact; only move the existing
+     top-level sections into a clearer customer journey. */
+  function arrangeHomepageSections() {
+    var main = document.querySelector('main');
+    if (!main) return;
+
+    var sections = Array.prototype.slice.call(main.children);
+    var bySelector = function (selector) { return main.querySelector(selector); };
+    var testimonials = sections.find(function (el) {
+      return el.tagName === 'SECTION' &&
+        !el.id &&
+        el !== bySelector('.ap-hero') &&
+        el !== bySelector('.ap-process') &&
+        el !== bySelector('.ap-statement') &&
+        el !== bySelector('.ap-final') &&
+        el.textContent.indexOf('WHAT OUR CLIENTS SAY') !== -1;
+    });
+
+    var order = [
+      bySelector('.ap-hero'),
+      bySelector('.ap-strip'),
+      bySelector('#build'),
+      sections.find(function (el) {
+        return el.tagName === 'SECTION' &&
+          el.classList.contains('ap-why') &&
+          !el.id &&
+          el.textContent.indexOf('Why Astra') !== -1;
+      }),
+      bySelector('#develop'),
+      bySelector('.ap-process'),
+      bySelector('#work'),
+      bySelector('#results'),
+      bySelector('#marketing'),
+      bySelector('#apps'),
+      bySelector('#automation'),
+      bySelector('#meta-whatsapp'),
+      bySelector('#pricing-home'),
+      testimonials,
+      bySelector('.ap-statement'),
+      bySelector('.ap-final')
+    ];
+
+    var valid = order.filter(function (el, index) {
+      return el && order.indexOf(el) === index;
+    });
+
+    valid.forEach(function (el) { main.appendChild(el); });
+  }
+
+  arrangeHomepageSections();
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- Sticky nav shadow ---------- */
