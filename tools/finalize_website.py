@@ -23,6 +23,48 @@ for path in html_files:
     fixed = fixed.replace('Client Name', 'Verified Client Story')
     fixed = fixed.replace('Business / Company', 'Verified project')
     fixed = fixed.replace('By Astra Team • Jan 01', 'By Astra Digital Market • Insights')
+
+    # Keep the homepage testimonial design, but use natural sample copy rather than AI-style claims.
+    if path.name == 'index.html':
+        fixed = fixed.replace(
+            "Real experiences from businesses we've helped with digital marketing, websites, software, automation and creative solutions.",
+            "Sample review wording for the homepage. Replace these with verified client feedback as you collect it."
+        )
+        sample_reviews = [
+            ('Sample Client 01', 'Website Development', 'The team understood what we needed and helped us get our website work organized properly. Communication was easy throughout.'),
+            ('Sample Client 02', 'Digital Marketing', 'We were looking for help with our social media and online marketing. The team was responsive and explained things clearly.'),
+            ('Sample Client 03', 'WhatsApp Automation', 'We started with a simple requirement and the team helped us understand how the automation could fit into our day-to-day work.'),
+            ('Sample Client 04', 'Website Development', 'What I liked most was the communication. Whenever we had a question, the team was available and explained what was being done.'),
+            ('Sample Client 05', 'Digital Marketing', 'We wanted to improve our online presence and got some useful ideas for our marketing. Overall, the process was smooth.'),
+            ('Sample Client 06', 'WhatsApp Automation', 'The team listened to our requirements and suggested a solution based on what we actually needed. Good experience so far.')
+        ]
+        review_pattern = re.compile(
+            r'(<h4[^>]*>)(?:Verified Client Story)(</h4>).*?(<p[^>]*>)(?:Verified project)(</p>).*?(<p[^>]*>)(?:We are currently collecting verified client stories and measurable project outcomes\.)(</p>)',
+            re.S
+        )
+        def review_replacer(match):
+            idx = review_replacer.count
+            review_replacer.count += 1
+            if idx >= len(sample_reviews):
+                return match.group(0)
+            name, category, quote = sample_reviews[idx]
+            return (
+                match.group(1) + name + match.group(2) +
+                re.search(r'(<div style="display:flex; gap:12px; align-items:center;">.*?</div>\s*</div>\s*<div style="font-size:18px; color:var\(--gold\); line-height:1;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>\s*</div>)', match.group(0), re.S).group(1) if False else
+                match.group(0)
+            )
+        # Replace the three text nodes inside each testimonial card while leaving layout and styling untouched.
+        h4_repl = iter(sample_reviews)
+        def replace_card_text(match):
+            name, category, quote = next(h4_repl)
+            card = match.group(0)
+            card = re.sub(r'(<h4[^>]*>).*?(</h4>)', lambda m: m.group(1) + name + m.group(2), card, count=1, flags=re.S)
+            card = re.sub(r'(<p[^>]*>).*?(</p>)', lambda m: m.group(1) + category + m.group(2), card, count=1, flags=re.S)
+            card = re.sub(r'(<p[^>]*>).*?(</p>)', lambda m: m.group(1) + quote + m.group(2), card, count=1, flags=re.S)
+            return card
+        card_pattern = re.compile(r'<article[^>]*>.*?Verified Client Story.*?Verified project.*?We are currently collecting verified client stories and measurable project outcomes\..*?</article>', re.S)
+        fixed = card_pattern.sub(replace_card_text, fixed)
+
     if fixed != text:
         path.write_text(fixed, encoding='utf-8')
 
