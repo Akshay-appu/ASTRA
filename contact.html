@@ -310,8 +310,8 @@
       <div class="ap-footer-bottom">
         <span>© <span id="auYear">2026</span> Astra Digital Market. All rights reserved.</span>
         <nav aria-label="Legal">
-          <a href="contact.html">Privacy</a>
-          <a href="contact.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
         </nav>
       </div>
     </div>
@@ -361,6 +361,7 @@
         var company  = document.getElementById("ac-company").value.trim();
         var email    = document.getElementById("ac-email").value.trim();
         var rawPhone = document.getElementById("ac-phone").value.trim().replace(/\D/g,"");
+        if (!/^\d{10}$/.test(rawPhone)) { status.style.color = "#ff5252"; status.textContent = "⚠️ Please enter a valid 10-digit Indian mobile number."; return; }
         var phone    = "+91" + rawPhone;
         var services = Array.from(checked).map(function(c){ return c.value; }).join(", ");
         var bval     = budget.value;
