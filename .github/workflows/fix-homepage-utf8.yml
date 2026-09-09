@@ -1,0 +1,55 @@
+name: Fix homepage UTF-8
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout homepage-redesign
+        uses: actions/checkout@v4
+        with:
+          ref: homepage-redesign
+          fetch-depth: 0
+
+      - name: Repair mojibake in homepage
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("index.html")
+          text = path.read_text(encoding="utf-8")
+
+          replacements = {
+              "â€”": "—",
+              "â†—": "→",
+              "â†’": "→",
+              "âš™ï¸": "⚙️",
+              "ðŸ–¥ï¸": "🖥️",
+              "ðŸ“±": "📱",
+              "ðŸ¤–": "🤖",
+              "ðŸ“Š": "📊",
+              "ðŸ“ˆ": "📈",
+              "âœ¦": "✨",
+          }
+
+          for bad, good in replacements.items():
+              text = text.replace(bad, good)
+
+          path.write_text(text, encoding="utf-8", newline="\n")
+      - name: Commit repair if needed
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No UTF-8 repair needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix UTF-8 characters on homepage"
+          git push origin HEAD:homepage-redesign
