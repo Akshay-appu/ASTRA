@@ -5,34 +5,56 @@
 (function () {
   'use strict';
 
-  /* Load a versioned copy of the original homepage stylesheet.
-     This prevents stale GitHub Pages/browser CSS from hiding the original design. */
-  var versionedCss = 'css/astra-homepage-v2.css';
-  if (!document.querySelector('link[data-astra-home-v2]')) {
-    var cssLink = document.createElement('link');
-    cssLink.rel = 'stylesheet';
-    cssLink.href = versionedCss;
-    cssLink.setAttribute('data-astra-home-v2', 'true');
-    document.head.appendChild(cssLink);
-  }
-
   /* ---------- Repair legacy mojibake in existing homepage HTML ---------- */
+  /* The original homepage contains a few characters that were saved with
+     an incorrect UTF-8 conversion. Repair those characters in the browser
+     without changing the original page structure or visual design. */
   var mojibake = [
-    ['â€”', '—'], ['â€“', '–'], ['â†—', '→'], ['â†’', '→'], ['â†‘', '↑'],
-    ['â†“', '↓'], ['âœ¦', '✨'], ['âš™ï¸', '⚙️'], ['ðŸ–¥ï¸', '🖥️'],
-    ['ðŸ“±', '📱'], ['ðŸ¤–', '🤖'], ['ðŸ“Š', '📊'], ['ðŸ“ˆ', '📈'],
-    ['ðŸ“‹', '📋'], ['ðŸ”¥', '🔥'], ['ðŸ’¡', '💡'], ['ðŸ”§', '🔧'],
-    ['ðŸŽ¯', '🎯'], ['ðŸŒŸ', '🌟'], ['â‚¹', '₹'], ['Â©', '©'], ['Â®', '®'],
-    ['Â·', '·'], ['â€œ', '“'], ['â€', '”'], ['â€˜', '‘'], ['â€™', '’'], ['â€¦', '…']
+    ['â€”', '—'],
+    ['â€“', '–'],
+    ['â†—', '→'],
+    ['â†’', '→'],
+    ['â†‘', '↑'],
+    ['â†“', '↓'],
+    ['âœ¦', '✨'],
+    ['âœ“', '✓'],
+    ['âš™ï¸', '⚙️'],
+    ['âš¡', '⚡'],
+    ['â—', '●'],
+    ['ðŸ–¥ï¸', '🖥️'],
+    ['ðŸ“±', '📱'],
+    ['ðŸ¤–', '🤖'],
+    ['ðŸ“Š', '📊'],
+    ['ðŸ“ˆ', '📈'],
+    ['ðŸ“‹', '📋'],
+    ['ðŸ“', '📁'],
+    ['ðŸ”¥', '🔥'],
+    ['ðŸ’¡', '💡'],
+    ['ðŸ”§', '🔧'],
+    ['ðŸŽ¯', '🎯'],
+    ['ðŸŸ¢', '🟢'],
+    ['ðŸŒŸ', '🌟'],
+    ['â‚¹', '₹'],
+    ['Â©', '©'],
+    ['Â®', '®'],
+    ['Â·', '·'],
+    ['â€œ', '“'],
+    ['â€', '”'],
+    ['â€˜', '‘'],
+    ['â€™', '’'],
+    ['â€¦', '…']
   ];
 
   function repairMojibake(value) {
     var out = value;
-    for (var i = 0; i < mojibake.length; i++) out = out.split(mojibake[i][0]).join(mojibake[i][1]);
+    for (var i = 0; i < mojibake.length; i++) {
+      out = out.split(mojibake[i][0]).join(mojibake[i][1]);
+    }
     return out;
   }
 
   function repairNode(root) {
+    if (!root) return;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     var node;
     while ((node = walker.nextNode())) {
@@ -43,52 +65,78 @@
     for (var e = 0; e < elements.length; e++) {
       var el = elements[e];
       for (var a = 0; a < el.attributes.length; a++) {
-        var attr = el.attributes[a], fixedAttr = repairMojibake(attr.value);
+        var attr = el.attributes[a];
+        var fixedAttr = repairMojibake(attr.value);
         if (fixedAttr !== attr.value) el.setAttribute(attr.name, fixedAttr);
       }
     }
   }
+
+  /* defer guarantees the document body has been parsed before this runs. */
   repairNode(document.body);
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Sticky nav shadow ---------- */
   var nav = document.querySelector('.ap-nav');
-  function onScroll() { if (nav) nav.classList.toggle('ap-scrolled', window.scrollY > 10); }
+  function onScroll() {
+    if (nav) nav.classList.toggle('ap-scrolled', window.scrollY > 10);
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* ---------- Mobile menu ---------- */
   var burger = document.querySelector('.ap-burger');
   var mobile = document.getElementById('apMobile');
   if (burger && mobile) {
     function closeMenu() {
-      burger.setAttribute('aria-expanded', 'false'); mobile.classList.remove('ap-open'); burger.setAttribute('aria-label', 'Open menu');
+      burger.setAttribute('aria-expanded', 'false');
+      mobile.classList.remove('ap-open');
+      burger.setAttribute('aria-label', 'Open menu');
     }
     burger.addEventListener('click', function () {
       var open = burger.getAttribute('aria-expanded') === 'true';
-      burger.setAttribute('aria-expanded', String(!open)); burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu'); mobile.classList.toggle('ap-open', !open);
+      burger.setAttribute('aria-expanded', String(!open));
+      burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+      mobile.classList.toggle('ap-open', !open);
     });
-    mobile.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    mobile.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
     document.addEventListener('click', function (e) {
-      if (mobile.classList.contains('ap-open') && !mobile.contains(e.target) && !burger.contains(e.target)) closeMenu();
+      if (mobile.classList.contains('ap-open') &&
+          !mobile.contains(e.target) && !burger.contains(e.target)) closeMenu();
     });
   }
 
+  /* ---------- Reveal on scroll ---------- */
   var revealEls = document.querySelectorAll('.ap-reveal');
   if ('IntersectionObserver' in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('ap-in'); io.unobserve(en.target); } });
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('ap-in'); io.unobserve(en.target); }
+      });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(function (el) { io.observe(el); });
-  } else revealEls.forEach(function (el) { el.classList.add('ap-in'); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('ap-in'); });
+  }
 
+  /* ---------- Stat counters ---------- */
   var counters = document.querySelectorAll('[data-count]');
   function animateCount(el) {
-    var raw = el.getAttribute('data-count'), target = parseFloat(raw), decimals = (raw.split('.')[1] || '').length;
+    var raw = el.getAttribute('data-count');
+    var target = parseFloat(raw);
+    var decimals = (raw.split('.')[1] || '').length;
     var dur = 1600, start = null;
     if (reduceMotion) { el.textContent = target.toFixed(decimals); return; }
     function tick(ts) {
       if (!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
       el.textContent = (target * eased).toFixed(decimals);
       if (p < 1) requestAnimationFrame(tick);
     }
@@ -96,11 +144,16 @@
   }
   if ('IntersectionObserver' in window) {
     var cio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { animateCount(en.target); cio.unobserve(en.target); } });
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { animateCount(en.target); cio.unobserve(en.target); }
+      });
     }, { threshold: 0.4 });
     counters.forEach(function (el) { cio.observe(el); });
-  } else counters.forEach(animateCount);
+  } else {
+    counters.forEach(animateCount);
+  }
 
+  /* ---------- Card spotlight follows cursor ---------- */
   document.querySelectorAll('.ap-card').forEach(function (card) {
     card.addEventListener('pointermove', function (e) {
       var r = card.getBoundingClientRect();
