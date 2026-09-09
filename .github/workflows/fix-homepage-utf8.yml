@@ -1,6 +1,9 @@
 name: Fix homepage UTF-8
 
 on:
+  push:
+    branches:
+      - homepage-redesign
   workflow_dispatch:
 
 permissions:
@@ -20,10 +23,8 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-
           path = Path("index.html")
           text = path.read_text(encoding="utf-8")
-
           replacements = {
               "â€”": "—",
               "â†—": "→",
@@ -36,11 +37,10 @@ jobs:
               "ðŸ“ˆ": "📈",
               "âœ¦": "✨",
           }
-
           for bad, good in replacements.items():
               text = text.replace(bad, good)
-
           path.write_text(text, encoding="utf-8", newline="\n")
+
       - name: Commit repair if needed
         shell: bash
         run: |
