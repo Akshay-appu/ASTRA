@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    ASTRA DIGITAL MARKET — Global interactions (all pages)
    Vanilla JS. Respects prefers-reduced-motion.
    ============================================================ */
@@ -115,8 +115,9 @@
     });
   });
 
-  /* Contact form: route the existing EmailJS form to the connected Gmail service. */
+  /* Contact form: use the current EmailJS public key. */
   if (window.emailjs && document.getElementById('astraContactForm')) {
+    emailjs.init({ publicKey: 'AL9B7C0QaChnJZX-Q' });
     var originalEmailJSSend = window.emailjs.send.bind(window.emailjs);
     window.emailjs.send = function (serviceId, templateId, templateParams, options) {
       if (serviceId === 'service_1ve16ms') serviceId = 'service_5gifhqn';
