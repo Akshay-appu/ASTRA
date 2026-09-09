@@ -91,4 +91,42 @@
       card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     });
   });
+
+  /* ---------- Repair UTF-8 mojibake already present in homepage HTML ---------- */
+  (function repairMojibake() {
+    var replacements = {
+      '\u00e2\u20ac\u201d': '\u2014',
+      '\u00e2\u2020\u2019': '\u2192',
+      '\u00e2\u2020\u2014': '\u2192',
+      '\u00e2\u0161\u2122\u00ef\u00b8\u008f': '\u2699\ufe0f',
+      '\u00f0\u0178\u2013\u00a5\u00ef\u00b8\u008f': '\ud83d\udda5\ufe0f',
+      '\u00f0\u0178\u201c\u00b1': '\ud83d\udcf1',
+      '\u00f0\u0178\u00a4\u2013': '\ud83e\udd16',
+      '\u00f0\u0178\u201c\u0160': '\ud83d\udcca',
+      '\u00f0\u0178\u201c\u02c6': '\ud83d\udcc8',
+      '\u00e2\u0153\u00a6': '\u2728'
+    };
+
+    function repair(value) {
+      Object.keys(replacements).forEach(function (bad) {
+        value = value.split(bad).join(replacements[bad]);
+      });
+      return value;
+    }
+
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      var fixed = repair(node.nodeValue);
+      if (fixed !== node.nodeValue) node.nodeValue = fixed;
+    });
+
+    document.querySelectorAll('*').forEach(function (el) {
+      Array.prototype.forEach.call(el.attributes, function (attr) {
+        var fixed = repair(attr.value);
+        if (fixed !== attr.value) el.setAttribute(attr.name, fixed);
+      });
+    });
+  })();
 })();
