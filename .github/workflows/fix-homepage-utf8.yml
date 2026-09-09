@@ -23,22 +23,26 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+
           path = Path("index.html")
           text = path.read_text(encoding="utf-8")
+
           replacements = {
-              "â€”": "—",
-              "â†—": "→",
-              "â†’": "→",
-              "âš™ï¸": "⚙️",
-              "ðŸ–¥ï¸": "🖥️",
-              "ðŸ“±": "📱",
-              "ðŸ¤–": "🤖",
-              "ðŸ“Š": "📊",
-              "ðŸ“ˆ": "📈",
-              "âœ¦": "✨",
+              "\u00e2\u20ac\u201d": "\u2014",
+              "\u00e2\u2020\u2019": "\u2192",
+              "\u00e2\u2020\u2014": "\u2192",
+              "\u00e2\u0161\u2122\u00ef\u00b8\u008f": "\u2699\ufe0f",
+              "\u00f0\u0178\u2013\u00a5\u00ef\u00b8\u008f": "\U0001f5a5\ufe0f",
+              "\u00f0\u0178\u201c\u00b1": "\U0001f4f1",
+              "\u00f0\u0178\u00a4\u2013": "\U0001f916",
+              "\u00f0\u0178\u201c\u0160": "\U0001f4ca",
+              "\u00f0\u0178\u201c\u02c6": "\U0001f4c8",
+              "\u00e2\u0153\u00a6": "\u2728",
           }
+
           for bad, good in replacements.items():
               text = text.replace(bad, good)
+
           path.write_text(text, encoding="utf-8", newline="\n")
 
       - name: Commit repair if needed
